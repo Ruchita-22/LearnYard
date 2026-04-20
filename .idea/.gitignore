@@ -1,0 +1,48 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Java
+*.class
+*.log
+target/
+build/
+out/
+
+# Maven
+.mvn/
+!mvnw
+!mvnw.cmd
+
+# Gradle
+.gradle/
+
+# IntelliJ
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / Secrets
+.env
+.env.*
+application-local.yml
+application-dev.yml
+application.properties
+
+# Logs & temp
+logs/
+*.tmp
+
+# Coverage
+coverage/
+reports/
+
+# Node (if used)
+node_modules/
+dist/
+
+# Database
+*.db
