@@ -1,4 +1,4 @@
-package subarray;
+package prefix.hashingWithPrefix;
 
 import java.util.*;
 
@@ -6,8 +6,10 @@ public class HashingWithPrefixSum {
 
     //560. Subarray Sum Equals K
     public int subarraySum(int[] nums, int k) {
+
         var map = new HashMap<Integer, Integer>();
         map.put(0,1);
+
         int sum = 0, count = 0;
         for(int num : nums) {
             sum += num;
@@ -21,13 +23,16 @@ public class HashingWithPrefixSum {
 
     //974. Subarray Sums Divisible by K
     public int subarraysDivByK(int[] nums, int k) {
+
         var map = new HashMap<Integer, Integer>();
         map.put(0,1);
+
         int sum = 0, count = 0;
         for(int num : nums) {
             sum += num;
             int sumMod = sum % k;
             if(sumMod < 0) sumMod += k;
+
             if(map.containsKey(sumMod)) {
                 count += map.get(sumMod);
             }
@@ -64,6 +69,7 @@ public class HashingWithPrefixSum {
         }
         return len == nums.length ? -1 : len;
     }
+
     //523. Continuous Subarray Sum
     public boolean checkSubarraySum(int[] nums, int k) {
         if(nums.length < 2 || k == 0) return false;
@@ -81,6 +87,7 @@ public class HashingWithPrefixSum {
         }
         return false;
     }
+
     //2845. Count of Interesting Subarrays
     public long countInterestingSubarrays(List<Integer> nums, int modulo, int k) {
         int arr[] = new int[nums.size()];
@@ -105,6 +112,7 @@ public class HashingWithPrefixSum {
         }
         return count;
     }
+
     //1248. Count Number of Nice Subarrays
     public int numberOfSubarrays(int[] nums, int k) {
         int arr[] = new int[nums.length];
@@ -129,6 +137,7 @@ public class HashingWithPrefixSum {
         }
         return count;
     }
+
     //1915. Number of Wonderful Substrings
     public long wonderfulSubstrings(String word) {
         int currXor = 0;

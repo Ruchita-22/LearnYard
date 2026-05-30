@@ -9,6 +9,7 @@ public class HashingWithPrefixSum {
 		var map = new HashMap<Integer, Integer>();
 		map.put(0,1);
 		int sum = 0, count = 0;
+
 		for(int num : nums) {
 			sum += num;
 			if(map.containsKey(sum - k)) {
@@ -18,16 +19,16 @@ public class HashingWithPrefixSum {
 		}
 		return count;
 	}
-
+	///////////////////modulo or divisible //////////////
 	//974. Subarray Sums Divisible by K
 	public int subarraysDivByK(int[] nums, int k) {
 		var map = new HashMap<Integer, Integer>();
 		map.put(0,1);
 		int sum = 0, count = 0;
-		for(int num : nums) {
-			sum += num;
-			int sumMod = sum % k;
-			if(sumMod < 0) sumMod += k;
+
+		for(int j = 0; j < nums.length; j++) {
+			sum += nums[j];
+			int sumMod = (sum % k + k) % k;
 			if(map.containsKey(sumMod)) {
 				count += map.get(sumMod);
 			}
@@ -71,6 +72,7 @@ public class HashingWithPrefixSum {
 		var map = new HashMap<Integer, Integer>();
 		map.put(0,-1);
 		int sum = 0, len = Integer.MAX_VALUE;
+
 		for(int j = 0; j < nums.length; j++) {
 			sum += nums[j];
 			int currSumMod = (sum % k + k) % k;
@@ -132,28 +134,57 @@ public class HashingWithPrefixSum {
         }
         return count;
     }
-    
+    //////////////////Xor ////////////////////////
     //1915. Number of Wonderful Substrings
     //https://www.youtube.com/watch?v=1DdmbJj4xLE
-    public long wonderfulSubstrings(String word) {
-        int currXor = 0;
-        long count = 0;
-        HashMap<Integer, Integer> map = new HashMap<>();
-        map.put(0,1);
+	/*
+	* a = 1
+	* b = 10
+	* c = 100
+	* d = 1000
+	* e = 10000*/
+	public long wonderfulSubstrings(String word) {
+		var map = new HashMap<Integer, Integer>();
+		map.put(0,1);
+		int xor = 0;
+		long count = 0;
 
-        for(char ch : word.toCharArray()) {
-            int charIdx = ch-'a';
-            currXor ^= 1<<charIdx;
-            count += map.getOrDefault(currXor,0);
-            for(int i = 0; i < 10; i++) {
-                count += map.getOrDefault(currXor ^ (1<<i),0);
-            }
-            map.put(currXor, map.getOrDefault(currXor, 0)+1);
-        }
-        return count;
-    }
-    
-    //2260. Minimum Consecutive Cards to Pick Up
+		for(char c : word.toCharArray()) {
+			int idx = c - 'a';
+			xor ^= (1<< idx);
+
+			count += map.getOrDefault(xor,0);
+
+			for(int i = 0; i < 10; i++) {
+				count += map.getOrDefault(xor ^ (1<<i),0);
+			}
+			map.put(xor, map.getOrDefault(xor, 0)+1);
+		}
+		return count;
+	}
+    //2588. Count the Number of Beautiful Subarrays
+	//beautiful subarray whose xor become zero
+	// if xor is repeatig so inbetween it is zero
+	public long beautifulSubarrays(int[] nums) {
+		int pfXor[] = new int[nums.length];
+		pfXor[0] = nums[0];
+		for(int i = 1; i < nums.length; i++) {
+			pfXor[i] = pfXor[i-1] ^ nums[i];
+		}
+		HashMap<Integer, Integer> map = new HashMap<>(); //pfXor, frequency
+		long count = 0;
+		map.put(0,1);
+		for(int i = 0; i < pfXor.length; i++) {
+			if(map.containsKey(pfXor[i])) {
+				count += map.get(pfXor[i]);
+			}
+			map.put(pfXor[i], map.getOrDefault(pfXor[i], 0) + 1);
+		}
+		return count;
+
+	}
+
+	//2260. Minimum Consecutive Cards to Pick Up
     public int minimumCardPickup(int[] nums) {
         var map = new HashMap<Integer, Integer>();
         int i = 0, ans = Integer.MAX_VALUE;
